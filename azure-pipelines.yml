@@ -6,7 +6,7 @@ pool:
 
 steps:
 
-# Build with Maven
+# Build Maven Project
 - task: Maven@4
   displayName: 'Build Maven Project'
   inputs:
@@ -18,13 +18,12 @@ steps:
     jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
 
-# Copy generated JAR/WAR files to artifact staging
+# Copy entire project (including pom.xml)
 - task: CopyFiles@2
-  displayName: 'Copy Build Output'
+  displayName: 'Copy Project Files'
   inputs:
-    Contents: |
-      **/*.jar
-      **/*.war
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 # Publish artifact for Release Pipeline
